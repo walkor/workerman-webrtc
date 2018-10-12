@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="utf-8">
+    <meta name="description" content="WebRTC reference app">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
+    <meta itemprop="description" content="workerman php webrtc 示例">
+    <meta itemprop="name" content="php web-rtc 例子-基于workerman">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta id="theme-color" name="theme-color" content="#1e1e1e">
+    <title>php web-rtc例子,一对一聊天-基于workerman</title>
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #333;
+            color: #fff;
+            font-family: 'Roboto', 'Open Sans', 'Lucida Grande', sans-serif;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container text-center" style="margin-top: 80px">
+    <h1>workerman web-rtc</h1>
+    <p id="instructions">请输入房间号，留空则生成随机房间号</p>
+    <form action="room.php">
+        <div class="col-lg-12">
+            <div class="form-group col-lg-4 col-lg-push-4">
+                <input type="text" class="form-control" name="cid">
+            </div>
+        </div>
+        <div class="col-lg-12">
+            <div id="room-id-input-buttons">
+                <button class="btn btn-default" type="submit">进入房间</button>
+            </div>
+        </div>
+    </form>
+    <p>源码地址:<a href="https://github.com/walkor/workerman-webrtc" rel="nofollow" target="_blank">https://github.com/walkor/workerman-webrtc</a></p>
+</div>
+
+<script src="assets/js/jquery-3.2.1.min.js"></script>
+<script src="assets/js/bootstrap.js"></script>
+</body>
+</html>
