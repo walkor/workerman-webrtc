@@ -1,6 +1,9 @@
 # workerman-webrtc
 php webrtc demo based on workerman.
 
+## install
+`composer install`
+
 ## start
 `php start.php start -d`
 
