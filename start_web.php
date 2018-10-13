@@ -33,7 +33,7 @@ if (isset($SSL_CONTEXT)) {
 // WebServer进程数量
 $web->count = 2;
 // 设置站点根目录
-$web->addRoot('www.your_domain.com', __DIR__.'/Web');
+$web->addRoot('www.your_domain.com', __DIR__.'/web');
 
 
 // 如果不是在根目录启动，则运行runAll方法
