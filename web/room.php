@@ -93,6 +93,18 @@
     var ws = new WebSocket(WS_ADDRESS);
     ws.onopen = function(){
         subscribe(subject);
+        navigator.mediaDevices.getUserMedia({
+            audio: true,
+            video: true
+        }).then(function (stream) {
+            localVideo.srcObject = stream;
+            localStream = stream;
+            localVideo.addEventListener('loadedmetadata', function () {
+                publish('client-call', null)
+            });
+        }).catch(function (e) {
+            alert(e);
+        });
     };
     ws.onmessage = function(e){
         var package = JSON.parse(e.data);
@@ -119,7 +131,7 @@
                 pc.setRemoteDescription(new RTCSessionDescription(data));
                 if (!answer) {
                     pc.createAnswer().then(function (desc) {
-                        pc.setLocalDescription(desc).then(function () {
+                            pc.setLocalDescription(desc).then(function () {
                                 publish('client-answer', pc.localDescription);
                             });
                         }
@@ -144,19 +156,6 @@
     };
     var pc, localStream;
 
-    navigator.mediaDevices.getUserMedia({
-        audio: true,
-        video: true
-    }).then(function (stream) {
-        localVideo.srcObject = stream;
-        localStream = stream;
-        localVideo.addEventListener('loadedmetadata', function () {
-            publish('client-call', null)
-        });
-    }).catch(function (e) {
-        alert(e);
-    });
-
     function icecandidate(localStream) {
         pc = new RTCPeerConnection(configuration);
         pc.onicecandidate = function (event) {
@@ -164,8 +163,10 @@
                 publish('client-candidate', event.candidate);
             }
         };
-
-        pc.addStream(localStream);
+        var tracks = localStream.getTracks();
+        for(var i=0;i<tracks.length;i++){
+            pc.addTrack(tracks[i], localStream);
+        }
         pc.onaddstream = function (e) {
             $('#remoteVideo').removeClass('hidden');
             $('#localVideo').remove();
@@ -199,4 +200,3 @@
 </script>
 </body>
 </html>
-
