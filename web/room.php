@@ -120,7 +120,11 @@
                         function () {
                             publish('client-offer', pc.localDescription);
                         }
-                    );
+                    ).catch(function (e) {
+                        alert(e);
+                    });
+                }).catch(function (e) {
+                    alert(e);
                 });
                 break;
             case 'client-answer':
