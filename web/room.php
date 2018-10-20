@@ -10,7 +10,7 @@
     <meta itemprop="name" content="AppRTC">
     <meta name="mobile-web-app-capable" content="yes">
     <meta id="theme-color" name="theme-color" content="#1e1e1e">
-    <title>php web-rtc例子,一对一聊天-基于workerman</title>
+    <title>php web-rtc在线测试,一对一聊天-基于workerman</title>
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
     <style>
         body {
