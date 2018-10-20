@@ -128,24 +128,29 @@
                 });
                 break;
             case 'client-answer':
-                pc.setRemoteDescription(new RTCSessionDescription(data));
+                pc.setRemoteDescription(new RTCSessionDescription(data),function(){}, function(e){
+                    alert(e);
+                });
                 break;
             case 'client-offer':
                 icecandidate(localStream);
-                pc.setRemoteDescription(new RTCSessionDescription(data));
-                if (!answer) {
-                    pc.createAnswer(function (desc) {
-                            pc.setLocalDescription(desc, function () {
-                                publish('client-answer', pc.localDescription);
-                            }, function(e){
-                                alert(e);
-                            });
-                        }
-                    ,function(e){
-                        alert(e);
-                    });
-                    answer = 1;
-                }
+                pc.setRemoteDescription(new RTCSessionDescription(data), function(){
+                    if (!answer) {
+                        pc.createAnswer(function (desc) {
+                                pc.setLocalDescription(desc, function () {
+                                    publish('client-answer', pc.localDescription);
+                                }, function(e){
+                                    alert(e);
+                                });
+                            }
+                        ,function(e){
+                            alert(e);
+                        });
+                        answer = 1;
+                    }
+                }, function(e){
+                    alert(e);
+                });
                 break;
             case 'client-candidate':
                 pc.addIceCandidate(new RTCIceCandidate(data));
