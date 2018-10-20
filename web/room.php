@@ -130,12 +130,16 @@
                 icecandidate(localStream);
                 pc.setRemoteDescription(new RTCSessionDescription(data));
                 if (!answer) {
-                    pc.createAnswer().then(function (desc) {
-                            pc.setLocalDescription(desc).then(function () {
+                    pc.createAnswer(function (desc) {
+                            pc.setLocalDescription(desc, function () {
                                 publish('client-answer', pc.localDescription);
+                            }, function(e){
+                                alert(e);
                             });
                         }
-                    );
+                    ,function(e){
+                        alert(e);
+                    });
                     answer = 1;
                 }
                 break;
@@ -163,9 +167,13 @@
                 publish('client-candidate', event.candidate);
             }
         };
-        var tracks = localStream.getTracks();
-        for(var i=0;i<tracks.length;i++){
-            pc.addTrack(tracks[i], localStream);
+        try{
+            pc.addStream(localStream);
+        }catch(e){
+            var tracks = localStream.getTracks();
+            for(var i=0;i<tracks.length;i++){
+                pc.addTrack(tracks[i], localStream);
+            }
         }
         pc.onaddstream = function (e) {
             $('#remoteVideo').removeClass('hidden');
