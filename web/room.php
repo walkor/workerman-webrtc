@@ -153,7 +153,7 @@
                 });
                 break;
             case 'client-candidate':
-                pc.addIceCandidate(new RTCIceCandidate(data));
+                pc.addIceCandidate(new RTCIceCandidate(data), function(){}, function(e){alert(e);});
                 break;
         }
     };
