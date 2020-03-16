@@ -32,7 +32,7 @@ if (isset($SSL_CONTEXT)) {
 // WebServer进程数量
 $web->count = 2;
 
-define('WEBROOT', __DIR__ . '/web');
+define('WEBROOT', __DIR__ . DIRECTORY_SEPARATOR . 'web');
 
 $web->onMessage = function (TcpConnection $connection, Request $request) {
     $path = $request->path();
