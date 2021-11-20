@@ -20,7 +20,7 @@ require_once __DIR__ . '/config.php';
 use Workerman\Worker;
 
 // 订阅主题和连接的对应关系
-$subject_connnection_map = array();
+$subject_connection_map = array();
 if (isset($SSL_CONTEXT)) {
     // websocket监听8877端口
     $worker = new Worker('websocket://0.0.0.0:8877', $SSL_CONTEXT);
@@ -66,24 +66,24 @@ $worker->onClose = function($connection){
 
 // 订阅
 function subscribe($subject, $connection) {
-    global $subject_connnection_map;
+    global $subject_connection_map;
     $connection->subjects[$subject] = $subject;
-    $subject_connnection_map[$subject][$connection->id] = $connection;
+    $subject_connection_map[$subject][$connection->id] = $connection;
 }
 
 // 取消订阅
 function unsubscribe($subject, $connection) {
-    global $subject_connnection_map;
-    unset($subject_connnection_map[$subject][$connection->id]);
+    global $subject_connection_map;
+    unset($subject_connection_map[$subject][$connection->id]);
 }
 
 // 向某个主题发布事件
 function publish($subject, $event, $data, $exclude) {
-    global $subject_connnection_map;
-    if (empty($subject_connnection_map[$subject])) {
+    global $subject_connection_map;
+    if (empty($subject_connection_map[$subject])) {
         return;
     }
-    foreach ($subject_connnection_map[$subject] as $connection) {
+    foreach ($subject_connection_map[$subject] as $connection) {
         if ($exclude == $connection) {
             continue;
         }
